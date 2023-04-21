@@ -138,7 +138,9 @@ public class IntercomPlugin: CAPPlugin {
             userAttributes.languageOverride = languageOverride
         }
         let customAttributes = call.getObject("customAttributes")
-        userAttributes.customAttributes = customAttributes
+        if (customAttributes != nil) {
+            userAttributes.customAttributes = customAttributes
+        }
         Intercom.updateUser(with: userAttributes)
         call.resolve()
     }
@@ -149,9 +151,19 @@ public class IntercomPlugin: CAPPlugin {
     }
     
     @objc func logEvent(_ call: CAPPluginCall) {
-        let eventName = call.getString("name")
+        guard let eventName = call.getString("name") else {
+            call.reject("name is missing or empty")
+            return
+        }
+        
         let metaData = call.getObject("data")
         
+        if let metaData = call.getObject("data") {
+            Intercom.logEvent(withName: eventName, metaData: metaData)
+        } else {
+            Intercom.logEvent(withName: eventName)
+        }
+        call.resolve()
     }
     
     @objc func present(_ call: CAPPluginCall) {
@@ -212,36 +224,27 @@ public class IntercomPlugin: CAPPlugin {
         call.resolve()
     }
     
-    @objc func displayCarousel(_ call: CAPPluginCall) {
-        if let carouselId = call.getString("carouselId") {
-            Intercom.presentCarousel(carouselId)
-            call.resolve()
-        }else{
-            call.reject("carouselId not provided to displayCarousel.")
-        }
-    }
-    
     @objc func setUserHash(_ call: CAPPluginCall) {
-        let hmac = call.getString("hmac")
-        
-        if (hmac != nil) {
-            Intercom.setUserHash(hmac!)
-            call.resolve()
-            print("hmac sent to intercom")
-        }else{
-            call.reject("No hmac found. Read intercom docs and generate it.")
+        guard let hmac = call.getString("hmsc") else {
+            call.reject("hmac is missing or empty. Read intercom docs and generate it.")
+            return
         }
+        
+        Intercom.setUserHash(hmac)
+        call.resolve()
+        print("hmac sent to intercom")
     }
     
     @objc func setBottomPadding(_ call: CAPPluginCall) {
-        
         if let value = call.getString("value"),
            let number = NumberFormatter().number(from: value) {
-            
             Intercom.setBottomPadding(CGFloat(truncating: number))
             call.resolve()
             print("set bottom padding")
         } else {
+            call.reject("enter a value for padding bottom")
+        }
+    }
     
     @objc func presentContent(_ call: CAPPluginCall) {
         guard let contentId = call.getString("contentId") else {
