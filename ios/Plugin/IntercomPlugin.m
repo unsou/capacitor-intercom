@@ -6,6 +6,8 @@
 CAP_PLUGIN(IntercomPlugin, "Intercom",
            CAP_PLUGIN_METHOD(registerIdentifiedUser, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(registerUnidentifiedUser, CAPPluginReturnPromise);
+           CAP_PLUGIN_METHOD(loginIdentifiedUser, CAPPluginReturnPromise);
+           CAP_PLUGIN_METHOD(loginUnidentifiedUser, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(updateUser, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(logout, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(logEvent, CAPPluginReturnPromise);
@@ -21,4 +23,9 @@ CAP_PLUGIN(IntercomPlugin, "Intercom",
            CAP_PLUGIN_METHOD(setUserHash, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(setBottomPadding, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(displayArticle, CAPPluginReturnPromise);
+           CAP_PLUGIN_METHOD(present, CAPPluginReturnPromise);
+           CAP_PLUGIN_METHOD(presentContent, CAPPluginReturnPromise);
+           CAP_PLUGIN_METHOD(setupUnreadConversationListener, CAPPluginReturnPromise);
+           CAP_PLUGIN_METHOD(removeUnreadConversationListener, CAPPluginReturnPromise);
+           CAP_PLUGIN_METHOD(getUnreadConversationCount, CAPPluginReturnPromise);
 )

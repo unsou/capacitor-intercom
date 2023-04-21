@@ -28,6 +28,22 @@ public class IntercomPlugin: CAPPlugin {
         Intercom.setDeviceToken(deviceToken)
     }
     
+    @objc func setupUnreadConversationListener(_ call: CAPPluginCall) {
+        NotificationCenter.default.addObserver(self,
+           selector: #selector(self.updateUnreadCount(notification:)),
+               name: NSNotification.Name.IntercomUnreadConversationCountDidChange,
+             object: nil)
+    }
+    
+    @objc func updateUnreadCount(notification: NSNotification) {
+        guard let unreadCount = notification.object as? Data else {
+            return
+        }
+        
+        notifyListeners("updateUnreadCount", data: ["unreadCount": unreadCount])
+    }
+    
+    @available(*, deprecated, message: "This method is deprecated, use loginIdentifiedUser() instead.")
     @objc func registerIdentifiedUser(_ call: CAPPluginCall) {
         let userId = call.getString("userId")
         let email = call.getString("email")
@@ -54,9 +70,49 @@ public class IntercomPlugin: CAPPlugin {
         }
     }
     
+    @objc func loginIdentifiedUser(_ call: CAPPluginCall) {
+        let userId = call.getString("userId")
+        let email = call.getString("email")
+        let attributes = ICMUserAttributes()
+        
+        if ((email) != nil) {
+            attributes.email = email
+            Intercom.loginUser(with: attributes) { result in
+                switch result {
+                case .success: call.resolve()
+                case .failure(let error): call.reject("Error logging in: \(error.localizedDescription)")
+                }
+            }
+        }
+        
+        if ((userId) != nil) {
+            attributes.userId = userId
+            Intercom.loginUser(with: attributes) { result in
+                switch result {
+                case .success: call.resolve()
+                case .failure(let error): call.reject("Error logging in: \(error.localizedDescription)")
+                }
+            }
+        }
+    }
+    
+    @available(*, deprecated, message: "This method is deprecated, use loginIdentifiedUser() instead.")
     @objc func registerUnidentifiedUser(_ call: CAPPluginCall) {
-        Intercom.loginUnidentifiedUser()
-        call.resolve()
+        Intercom.loginUnidentifiedUser { result in
+            switch result {
+            case .success: call.resolve()
+            case .failure(let error): call.reject("Error loggin in unidentified user: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    @objc func loginUnidentifiedUser(_ call: CAPPluginCall) {
+        Intercom.loginUnidentifiedUser { result in
+            switch result {
+            case .success: call.resolve()
+            case .failure(let error): call.reject("Error loggin in unidentified user: \(error.localizedDescription)")
+            }
+        }
     }
     
     @objc func updateUser(_ call: CAPPluginCall) {
@@ -96,18 +152,23 @@ public class IntercomPlugin: CAPPlugin {
         let eventName = call.getString("name")
         let metaData = call.getObject("data")
         
-        if (eventName != nil && metaData != nil) {
-            Intercom.logEvent(withName: eventName!, metaData: metaData!)
-            
-        }else if (eventName != nil) {
-            Intercom.logEvent(withName: eventName!)
-        }
-        
+    }
+    
+    @objc func present(_ call: CAPPluginCall) {
+        let spaceMapping: [String: Space] = [
+            "helpCenter": .helpCenter,
+            "messages": .messages,
+            "home": .home
+        ]
+        let spaceString = call.getString("space", "")
+        let space = spaceMapping[spaceString] ?? .home
+        Intercom.present(space)
         call.resolve()
     }
     
+    @available(*, deprecated, message: "This method is deprecated, use present() instead.")
     @objc func displayMessenger(_ call: CAPPluginCall) {
-        Intercom.presentMessenger();
+        Intercom.present()
         call.resolve()
     }
     
@@ -120,8 +181,9 @@ public class IntercomPlugin: CAPPlugin {
         call.resolve()
     }
     
+    @available(*, deprecated, message: "This method is deprecated, use present() instead.")
     @objc func displayHelpCenter(_ call: CAPPluginCall) {
-        Intercom.presentHelpCenter()
+        Intercom.present(Space.helpCenter)
         call.resolve()
     }
     
@@ -180,17 +242,51 @@ public class IntercomPlugin: CAPPlugin {
             call.resolve()
             print("set bottom padding")
         } else {
-            call.reject("Enter a value for padding bottom")
+    
+    @objc func presentContent(_ call: CAPPluginCall) {
+        guard let contentId = call.getString("contentId") else {
+            call.reject("contentId not defined")
+            return
+        }
+
+        let contentMapping: [String: Intercom.Content] = [
+            "carousel": Intercom.Content.carousel(id: contentId),
+            "survey": Intercom.Content.survey(id: contentId),
+            "article": Intercom.Content.article(id: contentId)
+        ]
+        let contentTypeString = call.getString("contentType", "")
+        guard let contentType = contentMapping[contentTypeString] else {
+            call.reject("contentType not found")
+            return
+        }
+
+        Intercom.presentContent(contentType)
+        call.resolve()
+    }
+    
+    @available(*, deprecated, message: "This method is deprecated, use presentContent() instead.")
+    @objc func displayCarousel(_ call: CAPPluginCall) {
+        if let carouselId = call.getString("carouselId") {
+            Intercom.presentContent(Intercom.Content.carousel(id: carouselId))
+            call.resolve()
+        } else{
+            call.reject("carouselId not provided.")
         }
     }
     
+    @available(*, deprecated, message: "This method is deprecated, use presentContent() instead.")
     @objc func displayArticle(_ call: CAPPluginCall) {
         if let articleId = call.getString("articleId") {
-            Intercom.presentArticle(articleId)
+            Intercom.presentContent(Intercom.Content.article(id: articleId))
             call.resolve()
         } else {
-            call.reject("articleId not provided to presentArticle.")
+            call.reject("articleId not provided.")
         }
+    }
+    
+    @objc func getUnreadConversationCount(_ call: CAPPluginCall) {
+        let unreadCount = Intercom.unreadConversationCount()
+        call.resolve(["unreadCount": unreadCount])
     }
 }
 
