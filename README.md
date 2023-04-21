@@ -1,86 +1,39 @@
-<p align="center"><br><img src="https://user-images.githubusercontent.com/236501/85893648-1c92e880-b7a8-11ea-926d-95355b8175c7.png" width="128" height="128" /></p>
-<h3 align="center">Capacitor Intercom</h3>
-<p align="center"><strong><code>@capacitor-community/intercom</code></strong></p>
+<h2 align="center">Capacitor Intercom plugin</h2>
+<p align="center"><strong><code>@foodello/intercom</code></strong></p>
 <p align="center">
-  Capacitor community plugin for enabling Intercom capabilities
+  Capacitor plugin for enabling Intercom capabilities based on the Capacitor community plugin
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/maintenance/yes/2022?style=flat-square" />
-  <a href="https://www.npmjs.com/package/@capacitor-community/intercom"><img src="https://img.shields.io/npm/l/@capacitor-community/intercom?style=flat-square" /></a>
+  <img src="https://img.shields.io/maintenance/yes/2023?style=flat-square" />
+  <a href="https://www.npmjs.com/package/@foodello/intercom"><img src="https://img.shields.io/npm/l/@foodello/intercom?style=flat-square" /></a>
 <br>
-  <a href="https://www.npmjs.com/package/@capacitor-community/intercom"><img src="https://img.shields.io/npm/dw/@capacitor-community/intercom?style=flat-square" /></a>
-  <a href="https://www.npmjs.com/package/@capacitor-community/intercom"><img src="https://img.shields.io/npm/v/@capacitor-community/intercom?style=flat-square" /></a>
+  <a href="https://www.npmjs.com/package/@foodello/intercom"><img src="https://img.shields.io/npm/dw/@foodello/intercom?style=flat-square" /></a>
+  <a href="https://www.npmjs.com/package/@foodello/intercom"><img src="https://img.shields.io/npm/v/@foodello/intercom?style=flat-square" /></a>
   <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 <a href="#contributors"><img src="https://img.shields.io/badge/all%20contributors-14-orange?style=flat-square" /></a>
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 </p>
 
-## Sponsors
-
-<table>
-  <tr>
-    <td align="center">
-      <a href="https://intenseloop.com">
-      <img src="https://static.intenseloop.com/assets/logo-512x512.png" width="40" />
-      </a>
-    </td>
-    <td>
-      <a href="https://intenseloop.com">
-      Intenseloop
-      </a>
-    </td>
-  </tr>
-</table>
-
-## Maintainers
-
-| Maintainer   | GitHub                                  | Social                                    |
-| ------------ | --------------------------------------- | ----------------------------------------- |
-| Stewan Silva | [stewones](https://github.com/stewones) | [@stewones](https://twitter.com/stewones) |
-
 ## Notice 🚀
 
-We're starting fresh under an official org. If you were using the previous npm package `capacitor-intercom`, please update your package.json to `@capacitor-community/intercom`. Check out [changelog](/CHANGELOG.md) for more info.
+Thanks for the all the authors with their work in [`@capacitor-community/intercom`](https://github.com/capacitor-community/intercom
+). We have noticed that the repository was left behind the newest updates and the original repository did not get updates quick enough once pull request were opened. So we decided to serve the newest Intercom capabilities under seperate org until the original repository catches the changes.
 
-## Breaking changes from Capacitor v2 to v3
-
-- `UserUpdateOptions` option type becomes `IntercomUserUpdateOptions`
-- `IntercomPlugin` configuration key becomes `Intercom`
-- `android-apiKey` config key becomes `androidApiKey`
-- `android-appId` config key becomes `androidAppId`
-- `ios-apiKey` config key becomes `iosApiKey`
-- `ios-appId` config key becomes `iosAppId`
-- [Switch from CAPBridge to ApplicationDelegateProxy](https://capacitorjs.com/docs/updating/3-0#switch-from-capbridge-to-applicationdelegateproxy-in-application-events) in application events
-- remove the whole onCreate initialization from your app's `MainActivity.java`
-
-```diff
- public class MainActivity extends BridgeActivity {
--    @Override
--    public void onCreate(Bundle savedInstanceState) {
--        super.onCreate(savedInstanceState);
--
--        // Initializes the Bridge
--        this.init(savedInstanceState, new ArrayList<Class<? extends Plugin>>() {{
--            // Additional plugins you've installed go here
--            add(IntercomPlugin.class);
--        }});
--    }
- }
-```
+**This plugin is built for the Capacitor v4 upwards.**
 
 ## Installation
 
 Using npm:
 
 ```bash
-npm install @capacitor-community/intercom
+npm install @foodello/intercom
 ```
 
 Using yarn:
 
 ```bash
-yarn add @capacitor-community/intercom
+yarn add @foodello/intercom
 ```
 
 Sync native files:
@@ -90,54 +43,500 @@ npx cap sync
 ```
 
 ## API
+<docgen-index>
 
-- registerIdentifiedUser
-- registerUnidentifiedUser
-- updateUser
-- logout
-- logEvent
-- displayMessenger
-- displayMessageComposer
-- displayHelpCenter
-- hideMessenger
-- displayLauncher
-- hideLauncher
-- displayInAppMessages
-- hideInAppMessages
-- displayCarousel
-- setUserHash
-- setBottomPadding
+* [`registerIdentifiedUser(...)`](#registeridentifieduser)
+* [`loginIdentifiedUser(...)`](#loginidentifieduser)
+* [`registerUnidentifiedUser()`](#registerunidentifieduser)
+* [`loginUnidentifiedUser()`](#loginunidentifieduser)
+* [`updateUser(...)`](#updateuser)
+* [`logout()`](#logout)
+* [`logEvent(...)`](#logevent)
+* [`displayMessenger()`](#displaymessenger)
+* [`displayMessageComposer(...)`](#displaymessagecomposer)
+* [`displayHelpCenter()`](#displayhelpcenter)
+* [`hideMessenger()`](#hidemessenger)
+* [`displayLauncher()`](#displaylauncher)
+* [`hideLauncher()`](#hidelauncher)
+* [`displayInAppMessages()`](#displayinappmessages)
+* [`hideInAppMessages()`](#hideinappmessages)
+* [`displayCarousel(...)`](#displaycarousel)
+* [`setUserHash(...)`](#setuserhash)
+* [`setBottomPadding(...)`](#setbottompadding)
+* [`sendPushTokenToIntercom(...)`](#sendpushtokentointercom)
+* [`receivePush(...)`](#receivepush)
+* [`displayArticle(...)`](#displayarticle)
+* [`presentContent(...)`](#presentcontent)
+* [`present(...)`](#present)
+* [`setupUnreadConversationListener()`](#setupunreadconversationlistener)
+* [`removeUnreadConversationListener()`](#removeunreadconversationlistener)
+* [`getUnreadConversationCount()`](#getunreadconversationcount)
+* [Interfaces](#interfaces)
+* [Enums](#enums)
+
+</docgen-index>
 
 ## Usage
 
+Import intercom plugin into your project.
+
 ```js
-import { Intercom } from '@capacitor-community/intercom';
+import { Intercom } from '@foodello/intercom';
 import { PushNotifications } from '@capacitor/push-notifications';
+````
 
-// Register for push notifications from Intercom
-PushNotifications.register();
+<docgen-api>
+<!--Update the source file JSDoc comments and rerun docgen to update the docs below-->
 
-// Register an indetified user
-Intercom.registerIdentifiedUser({ userId: 123456 });
-Intercom.registerIdentifiedUser({ email: 'test@example.com' });
-Intercom.registerIdentifiedUser({ userId: 123456, email: 'test@example.com' });
+IntercomPlugin Interface
 
-// Register a log event
-Intercom.logEvent({ name: 'my-event', data: { pi: 3.14 } });
+### registerIdentifiedUser(...)
 
-// Display the message composer
-Intercom.displayMessageComposer({ message: 'Hello there!' });
-
-// Identity Verification
-// https://developers.intercom.com/installing-intercom/docs/ios-identity-verification
-Intercom.setUserHash({ hmac: 'xyz' });
+```typescript
+registerIdentifiedUser(options: { userId?: string; email?: string; }) => any
 ```
 
-## iOS setup
+| Param         | Type                                              |
+| ------------- | ------------------------------------------------- |
+| **`options`** | <code>{ userId?: string; email?: string; }</code> |
+
+**Returns:** <code>any</code>
+
+--------------------
+
+
+### loginIdentifiedUser(...)
+
+```typescript
+loginIdentifiedUser(options: { userId?: string; email?: string; }) => any
+```
+
+Login an identified user with Intercom.
+
+| Param         | Type                                              |
+| ------------- | ------------------------------------------------- |
+| **`options`** | <code>{ userId?: string; email?: string; }</code> |
+
+**Returns:** <code>any</code>
+
+--------------------
+
+
+### registerUnidentifiedUser()
+
+```typescript
+registerUnidentifiedUser() => any
+```
+
+**Returns:** <code>any</code>
+
+--------------------
+
+
+### loginUnidentifiedUser()
+
+```typescript
+loginUnidentifiedUser() => any
+```
+
+Login an unidentified user with Intercom.
+
+**Returns:** <code>any</code>
+
+--------------------
+
+
+### updateUser(...)
+
+```typescript
+updateUser(options: IntercomUserUpdateOptions) => any
+```
+
+Updates a user's attributes in Intercom.
+
+| Param         | Type                                                                            |
+| ------------- | ------------------------------------------------------------------------------- |
+| **`options`** | <code><a href="#intercomuserupdateoptions">IntercomUserUpdateOptions</a></code> |
+
+**Returns:** <code>any</code>
+
+--------------------
+
+
+### logout()
+
+```typescript
+logout() => any
+```
+
+Logs the user out of Intercom.
+
+**Returns:** <code>any</code>
+
+--------------------
+
+
+### logEvent(...)
+
+```typescript
+logEvent(options: { name: string; data?: any; }) => any
+```
+
+Logs an event with optional metadata in Intercom.
+
+| Param         | Type                                       |
+| ------------- | ------------------------------------------ |
+| **`options`** | <code>{ name: string; data?: any; }</code> |
+
+**Returns:** <code>any</code>
+
+--------------------
+
+
+### displayMessenger()
+
+```typescript
+displayMessenger() => any
+```
+
+**Returns:** <code>any</code>
+
+--------------------
+
+
+### displayMessageComposer(...)
+
+```typescript
+displayMessageComposer(options: { message: string; }) => any
+```
+
+Displays the Intercom Message Composer with an initial message.
+
+| Param         | Type                              |
+| ------------- | --------------------------------- |
+| **`options`** | <code>{ message: string; }</code> |
+
+**Returns:** <code>any</code>
+
+--------------------
+
+
+### displayHelpCenter()
+
+```typescript
+displayHelpCenter() => any
+```
+
+**Returns:** <code>any</code>
+
+--------------------
+
+
+### hideMessenger()
+
+```typescript
+hideMessenger() => any
+```
+
+Hides the Intercom Messenger.
+
+**Returns:** <code>any</code>
+
+--------------------
+
+
+### displayLauncher()
+
+```typescript
+displayLauncher() => any
+```
+
+Displays the Intercom Launcher.
+
+**Returns:** <code>any</code>
+
+--------------------
+
+
+### hideLauncher()
+
+```typescript
+hideLauncher() => any
+```
+
+Hides the Intercom Launcher.
+
+**Returns:** <code>any</code>
+
+--------------------
+
+
+### displayInAppMessages()
+
+```typescript
+displayInAppMessages() => any
+```
+
+Displays Intercom In-App Messages.
+
+**Returns:** <code>any</code>
+
+--------------------
+
+
+### hideInAppMessages()
+
+```typescript
+hideInAppMessages() => any
+```
+
+Hides Intercom In-App Messages.
+
+**Returns:** <code>any</code>
+
+--------------------
+
+
+### displayCarousel(...)
+
+```typescript
+displayCarousel(options: { carouselId: string; }) => any
+```
+
+| Param         | Type                                 |
+| ------------- | ------------------------------------ |
+| **`options`** | <code>{ carouselId: string; }</code> |
+
+**Returns:** <code>any</code>
+
+--------------------
+
+
+### setUserHash(...)
+
+```typescript
+setUserHash(options: { hmac: string; }) => any
+```
+
+Sets the HMAC user hash for Intercom Identity Verification.
+
+| Param         | Type                           |
+| ------------- | ------------------------------ |
+| **`options`** | <code>{ hmac: string; }</code> |
+
+**Returns:** <code>any</code>
+
+--------------------
+
+
+### setBottomPadding(...)
+
+```typescript
+setBottomPadding(options: { value: string; }) => any
+```
+
+Sets the bottom padding for the Intercom Messenger.
+
+| Param         | Type                            |
+| ------------- | ------------------------------- |
+| **`options`** | <code>{ value: string; }</code> |
+
+**Returns:** <code>any</code>
+
+--------------------
+
+
+### sendPushTokenToIntercom(...)
+
+```typescript
+sendPushTokenToIntercom(options: { value: string; }) => any
+```
+
+Sends a push token to Intercom.
+
+| Param         | Type                            |
+| ------------- | ------------------------------- |
+| **`options`** | <code>{ value: string; }</code> |
+
+**Returns:** <code>any</code>
+
+--------------------
+
+
+### receivePush(...)
+
+```typescript
+receivePush(notification: IntercomPushNotificationData) => any
+```
+
+Processes a received Intercom push notification.
+
+| Param              | Type                                                                                  |
+| ------------------ | ------------------------------------------------------------------------------------- |
+| **`notification`** | <code><a href="#intercompushnotificationdata">IntercomPushNotificationData</a></code> |
+
+**Returns:** <code>any</code>
+
+--------------------
+
+
+### displayArticle(...)
+
+```typescript
+displayArticle(options: { articleId: string; }) => any
+```
+
+| Param         | Type                                |
+| ------------- | ----------------------------------- |
+| **`options`** | <code>{ articleId: string; }</code> |
+
+**Returns:** <code>any</code>
+
+--------------------
+
+
+### presentContent(...)
+
+```typescript
+presentContent(options: { contentType: IntercomContent; contentId: string; }) => any
+```
+
+Presents an Intercom content item (Article, Carousel, or Survey) by its type and ID.
+
+| Param         | Type                                                                                             |
+| ------------- | ------------------------------------------------------------------------------------------------ |
+| **`options`** | <code>{ contentType: <a href="#intercomcontent">IntercomContent</a>; contentId: string; }</code> |
+
+**Returns:** <code>any</code>
+
+--------------------
+
+
+### present(...)
+
+```typescript
+present(options: { space: IntercomSpace; }) => any
+```
+
+Presents the Intercom's Help Center, Messenger, or Home based on the selected space.
+
+| Param         | Type                                                                |
+| ------------- | ------------------------------------------------------------------- |
+| **`options`** | <code>{ space: <a href="#intercomspace">IntercomSpace</a>; }</code> |
+
+**Returns:** <code>any</code>
+
+--------------------
+
+
+### setupUnreadConversationListener()
+
+```typescript
+setupUnreadConversationListener() => any
+```
+
+Setup listener for unread conversation count updates.
+
+**Returns:** <code>any</code>
+
+--------------------
+
+
+### removeUnreadConversationListener()
+
+```typescript
+removeUnreadConversationListener() => any
+```
+
+Remove listener for unread conversation count updates.
+
+**Returns:** <code>any</code>
+
+--------------------
+
+
+### getUnreadConversationCount()
+
+```typescript
+getUnreadConversationCount() => any
+```
+
+Get current unread conversation count.
+
+**Returns:** <code>any</code>
+
+--------------------
+
+
+### Interfaces
+
+
+#### IntercomUserUpdateOptions
+
+<a href="#intercomuserupdateoptions">IntercomUserUpdateOptions</a> Interface
+Represents the options for updating a user's attributes in Intercom.
+
+| Prop                   | Type                                 |
+| ---------------------- | ------------------------------------ |
+| **`userId`**           | <code>string</code>                  |
+| **`email`**            | <code>string</code>                  |
+| **`name`**             | <code>string</code>                  |
+| **`phone`**            | <code>string</code>                  |
+| **`languageOverride`** | <code>string</code>                  |
+| **`customAttributes`** | <code>{ [key: string]: any; }</code> |
+
+
+#### IntercomPushNotificationData
+
+<a href="#intercompushnotificationdata">IntercomPushNotificationData</a> Interface
+Represents the structure of a received Intercom push notification.
+
+| Prop                            | Type                |
+| ------------------------------- | ------------------- |
+| **`conversation_id`**           | <code>string</code> |
+| **`message`**                   | <code>string</code> |
+| **`body`**                      | <code>string</code> |
+| **`author_name`**               | <code>string</code> |
+| **`image_url`**                 | <code>string</code> |
+| **`app_name`**                  | <code>string</code> |
+| **`receiver`**                  | <code>string</code> |
+| **`conversation_part_type`**    | <code>string</code> |
+| **`intercom_push_type`**        | <code>string</code> |
+| **`uri`**                       | <code>string</code> |
+| **`push_only_conversation_id`** | <code>string</code> |
+| **`instance_id`**               | <code>string</code> |
+| **`title`**                     | <code>string</code> |
+| **`priority`**                  | <code>number</code> |
+
+
+### Enums
+
+
+#### IntercomContent
+
+| Members        | Value                   |
+| -------------- | ----------------------- |
+| **`Article`**  | <code>'article'</code>  |
+| **`Carousel`** | <code>'carousel'</code> |
+| **`Survey`**   | <code>'survey'</code>   |
+
+
+#### IntercomSpace
+
+| Members          | Value                     |
+| ---------------- | ------------------------- |
+| **`Home`**       | <code>'home'</code>       |
+| **`Messages`**   | <code>'messages'</code>   |
+| **`HelpCenter`** | <code>'helpCenter'</code> |
+
+</docgen-api>
+
+## Configurations
+### iOS setup
 
 - `ionic start my-cap-app --capacitor`
 - `cd my-cap-app`
-- `npm install —-save @capacitor-community/intercom`
+- `npm install —-save @foodello/intercom`
 - `mkdir www && touch www/index.html`
 - `npx cap add ios`
 - add intercom keys to capacitor's configuration file
@@ -160,11 +559,11 @@ Intercom.setUserHash({ hmac: 'xyz' });
 
 > Tip: every time you change a native code you may need to clean up the cache (Product > Clean build folder) and then run the app again.
 
-## Android setup
+### Android setup
 
 - `ionic start my-cap-app --capacitor`
 - `cd my-cap-app`
-- `npm install —-save @capacitor-community/intercom`
+- `npm install —-save @foodello/intercom`
 - `mkdir www && touch www/index.html`
 - `npx cap add android`
 - add intercom keys to capacitor's configuration file
@@ -192,9 +591,36 @@ Now you should be set to go. Try to run your client using `ionic cap run android
 
 MIT
 
-## Example
+## Original repository's maintainers and sponsors
 
-- https://github.com/capacitor-community/intercom/blob/master/example
+This repository is based on the wonderful work of the official `@capacitor-community/intercom` -plugin. Here we want to acknowledge the mastermind and sponsors behind that work.
+
+### Sponsors
+
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://intenseloop.com">
+      <img src="https://static.intenseloop.com/assets/logo-512x512.png" width="40" />
+      </a>
+    </td>
+    <td>
+      <a href="https://intenseloop.com">
+      Intenseloop
+      </a>
+    </td>
+  </tr>
+</table>
+
+### Maintainers
+
+| Maintainer   | GitHub                                  | Social                                    |
+| ------------ | --------------------------------------- | ----------------------------------------- |
+| Stewan Silva | [stewones](https://github.com/stewones) | [@stewones](https://twitter.com/stewones) |
+
+## Future plans
+
+We are planning on implementing the web usage of Intercom within this plugin as well. If you have any ideas what we should include, please open a new issue for it.
 
 ## Contributors ✨
 
