@@ -1,5 +1,10 @@
-#!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
 
-node_modules/.bin/commitlint --edit "${1}"
+# Load nvm and the correct Node.js version silently
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+nvm use --silent
+
+# Run hook commands
 npx --no-install commitlint --edit "$1"
