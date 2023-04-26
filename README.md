@@ -42,7 +42,34 @@ Sync native files:
 npx cap sync
 ```
 
+## Usage
+
+Import Intercom plugin into your project.
+
+```js
+import { Capacitor } from '@capacitor/core';
+import { Intercom } from '@foodello/intercom';
+import { PushNotifications } from '@capacitor/push-notifications';
+```
+
+Initialize Intercom plugin.
+```js
+/**
+ * Web requires loading and initializing the script of the SDK
+ * with the Intercom web config defined in IntercomWebConfig Interface.
+ * 
+ * Only available in Web.
+ * @since 4.2.0
+ */
+if (!Capacitor.isNativePlatform()) {
+  await Intercom.load({ app_id: 'xxx' });
+}
+
+// Android and iOS does not require seperate initialization
+```
+
 ## API
+
 <docgen-index>
 
 * [`load(...)`](#load)
@@ -77,15 +104,6 @@ npx cap sync
 * [Enums](#enums)
 
 </docgen-index>
-
-## Usage
-
-Import intercom plugin into your project.
-
-```js
-import { Intercom } from '@foodello/intercom';
-import { PushNotifications } from '@capacitor/push-notifications';
-````
 
 <docgen-api>
 <!--Update the source file JSDoc comments and rerun docgen to update the docs below-->
@@ -662,7 +680,7 @@ This repository is based on the wonderful work of the official `@capacitor-commu
 
 ## Future plans
 
-We are planning on implementing the web usage of Intercom within this plugin as well. If you have any ideas what we should include, please open a new issue for it.
+If you have any ideas what we should include, please open a new issue for it.
 
 ## Contributors ✨
 
