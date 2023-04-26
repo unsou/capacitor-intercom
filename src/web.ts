@@ -5,6 +5,7 @@ import type {
   IntercomCommandSignature,
   IntercomPlugin,
   IntercomPushNotificationData,
+  IntercomUserUpdateOptions,
   IntercomWebConfig,
   State,
 } from './definitions';
@@ -27,21 +28,6 @@ export class IntercomWeb extends WebPlugin implements IntercomPlugin {
     super();
   }
 
-  async initialize(): Promise<void> {
-    this.state.booted = window.Intercom.booted;
-    this.callIntercom('reattach_activator');
-    this.updateConfig(this.state.config);
-    this.state.initialized = true;
-
-    for (const [command, params] of this.preCalledMethods) {
-      this.callIntercom(command, params);
-    }
-
-    this.callIntercom('onHide', () => this.setIsVisible(true));
-    this.callIntercom('onShow', () => this.setIsVisible(false));
-    this.callIntercom('boot', this.state.config);
-  }
-
   async load(config: IntercomWebConfig): Promise<void> {
     this.state.config = config;
 
@@ -62,6 +48,21 @@ export class IntercomWeb extends WebPlugin implements IntercomPlugin {
         window.addEventListener('load', listener, false);
       }
     }
+  }
+
+  async initialize(): Promise<void> {
+    this.state.booted = window.Intercom.booted;
+    this.callIntercom('reattach_activator');
+    this.updateConfig(this.state.config);
+    this.state.initialized = true;
+
+    for (const [command, params] of this.preCalledMethods) {
+      this.callIntercom(command, params);
+    }
+
+    this.callIntercom('onHide', () => this.setIsVisible(true));
+    this.callIntercom('onShow', () => this.setIsVisible(false));
+    this.callIntercom('boot', this.state.config);
   }
 
   async loginIdentifiedUser(_options: {
@@ -143,8 +144,16 @@ export class IntercomWeb extends WebPlugin implements IntercomPlugin {
     throw this.unimplemented('Not implemented on web.');
   }
 
-  async updateUser(options: Partial<IntercomWebConfig>): Promise<void> {
-    this.updateConfig(options);
+  async updateUser(options: IntercomUserUpdateOptions): Promise<void> {
+    const configEntries = Object.entries({
+      user_id: options.userId,
+      language_override: options.languageOverride,
+      phone: options.phone,
+      name: options.name,
+      ...options.customAttributes,
+    }).filter(([_, value]) => value !== undefined);
+    const webConfig: IntercomWebConfig = Object.fromEntries(configEntries);
+    this.updateConfig(webConfig);
   }
 
   async logout(): Promise<void> {
