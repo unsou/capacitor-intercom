@@ -1,7 +1,6 @@
 package com.getcapacitor.community.intercom;
 
 import androidx.annotation.NonNull;
-
 import com.getcapacitor.CapConfig;
 import com.getcapacitor.JSArray;
 import com.getcapacitor.JSObject;
@@ -11,13 +10,6 @@ import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
 import com.getcapacitor.annotation.CapacitorPlugin;
 import com.getcapacitor.annotation.Permission;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
 import io.intercom.android.sdk.Intercom;
 import io.intercom.android.sdk.IntercomContent;
 import io.intercom.android.sdk.IntercomError;
@@ -27,9 +19,15 @@ import io.intercom.android.sdk.UnreadConversationCountListener;
 import io.intercom.android.sdk.UserAttributes;
 import io.intercom.android.sdk.identity.Registration;
 import io.intercom.android.sdk.push.IntercomPushClient;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 @CapacitorPlugin(name = "Intercom", permissions = @Permission(strings = {}, alias = "receive"))
 public class IntercomPlugin extends Plugin implements UnreadConversationCountListener {
+
     private final IntercomPushClient intercomPushClient = new IntercomPushClient();
 
     @Override
@@ -44,11 +42,15 @@ public class IntercomPlugin extends Plugin implements UnreadConversationCountLis
     @Override
     public void handleOnStart() {
         super.handleOnStart();
-        bridge.getActivity().runOnUiThread(() -> {
-            //We also initialize intercom here just in case it has died. If Intercom is already set up, this won't do anything.
-            setUpIntercom();
-            Intercom.client().handlePushMessage();
-        });
+        bridge
+            .getActivity()
+            .runOnUiThread(
+                () -> {
+                    //We also initialize intercom here just in case it has died. If Intercom is already set up, this won't do anything.
+                    setUpIntercom();
+                    Intercom.client().handlePushMessage();
+                }
+            );
     }
 
     @PluginMethod
@@ -65,17 +67,22 @@ public class IntercomPlugin extends Plugin implements UnreadConversationCountLis
         if (userId != null && userId.length() > 0) {
             registration = registration.withUserId(userId);
         }
-        Intercom.client().loginIdentifiedUser(registration, new IntercomStatusCallback() {
-            @Override
-            public void onSuccess() {
-                call.resolve();
-            }
+        Intercom
+            .client()
+            .loginIdentifiedUser(
+                registration,
+                new IntercomStatusCallback() {
+                    @Override
+                    public void onSuccess() {
+                        call.resolve();
+                    }
 
-            @Override
-            public void onFailure(@NonNull IntercomError intercomError) {
-                call.reject("Error logging in: " + intercomError.getErrorMessage());
-            }
-        });
+                    @Override
+                    public void onFailure(@NonNull IntercomError intercomError) {
+                        call.reject("Error logging in: " + intercomError.getErrorMessage());
+                    }
+                }
+            );
     }
 
     @PluginMethod
@@ -91,48 +98,61 @@ public class IntercomPlugin extends Plugin implements UnreadConversationCountLis
         if (userId != null && userId.length() > 0) {
             registration = registration.withUserId(userId);
         }
-        Intercom.client().loginIdentifiedUser(registration, new IntercomStatusCallback() {
-            @Override
-            public void onSuccess() {
-                call.resolve();
-            }
+        Intercom
+            .client()
+            .loginIdentifiedUser(
+                registration,
+                new IntercomStatusCallback() {
+                    @Override
+                    public void onSuccess() {
+                        call.resolve();
+                    }
 
-            @Override
-            public void onFailure(@NonNull IntercomError intercomError) {
-                call.reject("Error logging in: " + intercomError.getErrorMessage());
-            }
-        });
+                    @Override
+                    public void onFailure(@NonNull IntercomError intercomError) {
+                        call.reject("Error logging in: " + intercomError.getErrorMessage());
+                    }
+                }
+            );
     }
 
     @PluginMethod
     @Deprecated
     public void registerUnidentifiedUser(PluginCall call) {
-        Intercom.client().loginUnidentifiedUser(new IntercomStatusCallback() {
-            @Override
-            public void onSuccess() {
-                call.resolve();
-            }
+        Intercom
+            .client()
+            .loginUnidentifiedUser(
+                new IntercomStatusCallback() {
+                    @Override
+                    public void onSuccess() {
+                        call.resolve();
+                    }
 
-            @Override
-            public void onFailure(@NonNull IntercomError intercomError) {
-                call.reject("Error logging in unidentified user: " + intercomError.getErrorMessage());
-            }
-        });
+                    @Override
+                    public void onFailure(@NonNull IntercomError intercomError) {
+                        call.reject("Error logging in unidentified user: " + intercomError.getErrorMessage());
+                    }
+                }
+            );
     }
 
     @PluginMethod
     public void loginUnidentifiedUser(PluginCall call) {
-        Intercom.client().loginUnidentifiedUser(new IntercomStatusCallback() {
-            @Override
-            public void onSuccess() {
-                call.resolve();
-            }
+        Intercom
+            .client()
+            .loginUnidentifiedUser(
+                new IntercomStatusCallback() {
+                    @Override
+                    public void onSuccess() {
+                        call.resolve();
+                    }
 
-            @Override
-            public void onFailure(@NonNull IntercomError intercomError) {
-                call.reject("Error logging in unidentified user: " + intercomError.getErrorMessage());
-            }
-        });
+                    @Override
+                    public void onFailure(@NonNull IntercomError intercomError) {
+                        call.reject("Error logging in unidentified user: " + intercomError.getErrorMessage());
+                    }
+                }
+            );
     }
 
     @PluginMethod
@@ -162,17 +182,22 @@ public class IntercomPlugin extends Plugin implements UnreadConversationCountLis
         if (customAttributes != null) {
             builder.withCustomAttributes(customAttributes);
         }
-        Intercom.client().updateUser(builder.build(), new IntercomStatusCallback() {
-            @Override
-            public void onSuccess() {
-                call.resolve();
-            }
+        Intercom
+            .client()
+            .updateUser(
+                builder.build(),
+                new IntercomStatusCallback() {
+                    @Override
+                    public void onSuccess() {
+                        call.resolve();
+                    }
 
-            @Override
-            public void onFailure(@NonNull IntercomError intercomError) {
-                call.reject("Error updating user: " + intercomError.getErrorMessage());
-            }
-        });
+                    @Override
+                    public void onFailure(@NonNull IntercomError intercomError) {
+                        call.reject("Error updating user: " + intercomError.getErrorMessage());
+                    }
+                }
+            );
     }
 
     @PluginMethod
@@ -202,7 +227,7 @@ public class IntercomPlugin extends Plugin implements UnreadConversationCountLis
     @PluginMethod
     public void present(PluginCall call) {
         Map<String, IntercomSpace> spaceMapping = new HashMap<>();
-        spaceMapping.put("helpCenter", IntercomSpace.HelpCenter);
+        spaceMapping.put("help", IntercomSpace.HelpCenter);
         spaceMapping.put("messages", IntercomSpace.Messages);
         spaceMapping.put("home", IntercomSpace.Home);
 
@@ -215,7 +240,6 @@ public class IntercomPlugin extends Plugin implements UnreadConversationCountLis
         Intercom.client().present(space);
         call.resolve();
     }
-
 
     @PluginMethod
     @Deprecated

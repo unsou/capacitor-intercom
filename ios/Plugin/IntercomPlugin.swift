@@ -168,7 +168,7 @@ public class IntercomPlugin: CAPPlugin {
     
     @objc func present(_ call: CAPPluginCall) {
         let spaceMapping: [String: Space] = [
-            "helpCenter": .helpCenter,
+            "help": .helpCenter,
             "messages": .messages,
             "home": .home
         ]
