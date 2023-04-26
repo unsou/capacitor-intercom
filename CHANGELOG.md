@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.2.0](https://github.com/Fiksuruoka-fi/capacitor-intercom/compare/v4.1.0...v4.2.0) (2023-04-26)
+
+
+### Features
+
+* add web sdk ([c9bdeda](https://github.com/Fiksuruoka-fi/capacitor-intercom/commit/c9bdedae42e155feceefb9dbd6a19a606359d184))
+
+
+### Bug Fixes
+
+* **intercom:** :art: use same space naming on each platform ([b86743a](https://github.com/Fiksuruoka-fi/capacitor-intercom/commit/b86743a7d2709d6dc339bae949f887c85612e69f))
+* **intercom:** :bug: rename ios podspec ([08daf5c](https://github.com/Fiksuruoka-fi/capacitor-intercom/commit/08daf5c53974f551dab13cbb5943d83d5df2249c))
+
 ### [4.0.2](https://github.com/capacitor-community/intercom/compare/v4.0.1...v4.0.2) (2022-12-14)
 
 ### [4.0.1](https://github.com/capacitor-community/intercom/compare/v4.0.0...v4.0.1) (2022-11-09)
