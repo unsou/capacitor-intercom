@@ -25,3 +25,5 @@ jobs:
           release-type: node
           package-name: '@foodello/intercom'
           command: release-pr
+          pull-request-title-pattern: 'chore(release): release v${version}'
+          pull-request-header: ''
