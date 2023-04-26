@@ -45,6 +45,7 @@ npx cap sync
 ## API
 <docgen-index>
 
+* [`load(...)`](#load)
 * [`registerIdentifiedUser(...)`](#registeridentifieduser)
 * [`loginIdentifiedUser(...)`](#loginidentifieduser)
 * [`registerUnidentifiedUser()`](#registerunidentifieduser)
@@ -71,6 +72,7 @@ npx cap sync
 * [`setupUnreadConversationListener()`](#setupunreadconversationlistener)
 * [`removeUnreadConversationListener()`](#removeunreadconversationlistener)
 * [`getUnreadConversationCount()`](#getunreadconversationcount)
+* [`addListener(...)`](#addlistener)
 * [Interfaces](#interfaces)
 * [Enums](#enums)
 
@@ -90,17 +92,32 @@ import { PushNotifications } from '@capacitor/push-notifications';
 
 IntercomPlugin Interface
 
+### load(...)
+
+```typescript
+load(config: IntercomWebConfig) => Promise<void>
+```
+
+Load Intercom and set configs on Web environment.
+
+Only available for Web
+
+| Param        | Type                                                            |
+| ------------ | --------------------------------------------------------------- |
+| **`config`** | <code><a href="#intercomwebconfig">IntercomWebConfig</a></code> |
+
+--------------------
+
+
 ### registerIdentifiedUser(...)
 
 ```typescript
-registerIdentifiedUser(options: { userId?: string; email?: string; }) => any
+registerIdentifiedUser(options: { userId?: string; email?: string; }) => Promise<void>
 ```
 
 | Param         | Type                                              |
 | ------------- | ------------------------------------------------- |
 | **`options`** | <code>{ userId?: string; email?: string; }</code> |
-
-**Returns:** <code>any</code>
 
 --------------------
 
@@ -108,7 +125,7 @@ registerIdentifiedUser(options: { userId?: string; email?: string; }) => any
 ### loginIdentifiedUser(...)
 
 ```typescript
-loginIdentifiedUser(options: { userId?: string; email?: string; }) => any
+loginIdentifiedUser(options: { userId?: string; email?: string; }) => Promise<void>
 ```
 
 Login an identified user with Intercom.
@@ -117,18 +134,14 @@ Login an identified user with Intercom.
 | ------------- | ------------------------------------------------- |
 | **`options`** | <code>{ userId?: string; email?: string; }</code> |
 
-**Returns:** <code>any</code>
-
 --------------------
 
 
 ### registerUnidentifiedUser()
 
 ```typescript
-registerUnidentifiedUser() => any
+registerUnidentifiedUser() => Promise<void>
 ```
-
-**Returns:** <code>any</code>
 
 --------------------
 
@@ -136,12 +149,10 @@ registerUnidentifiedUser() => any
 ### loginUnidentifiedUser()
 
 ```typescript
-loginUnidentifiedUser() => any
+loginUnidentifiedUser() => Promise<void>
 ```
 
 Login an unidentified user with Intercom.
-
-**Returns:** <code>any</code>
 
 --------------------
 
@@ -149,7 +160,7 @@ Login an unidentified user with Intercom.
 ### updateUser(...)
 
 ```typescript
-updateUser(options: IntercomUserUpdateOptions) => any
+updateUser(options: IntercomUserUpdateOptions) => Promise<void>
 ```
 
 Updates a user's attributes in Intercom.
@@ -158,20 +169,16 @@ Updates a user's attributes in Intercom.
 | ------------- | ------------------------------------------------------------------------------- |
 | **`options`** | <code><a href="#intercomuserupdateoptions">IntercomUserUpdateOptions</a></code> |
 
-**Returns:** <code>any</code>
-
 --------------------
 
 
 ### logout()
 
 ```typescript
-logout() => any
+logout() => Promise<void>
 ```
 
 Logs the user out of Intercom.
-
-**Returns:** <code>any</code>
 
 --------------------
 
@@ -179,7 +186,7 @@ Logs the user out of Intercom.
 ### logEvent(...)
 
 ```typescript
-logEvent(options: { name: string; data?: any; }) => any
+logEvent(options: { name: string; data?: any; }) => Promise<void>
 ```
 
 Logs an event with optional metadata in Intercom.
@@ -188,18 +195,14 @@ Logs an event with optional metadata in Intercom.
 | ------------- | ------------------------------------------ |
 | **`options`** | <code>{ name: string; data?: any; }</code> |
 
-**Returns:** <code>any</code>
-
 --------------------
 
 
 ### displayMessenger()
 
 ```typescript
-displayMessenger() => any
+displayMessenger() => Promise<void>
 ```
-
-**Returns:** <code>any</code>
 
 --------------------
 
@@ -207,7 +210,7 @@ displayMessenger() => any
 ### displayMessageComposer(...)
 
 ```typescript
-displayMessageComposer(options: { message: string; }) => any
+displayMessageComposer(options: { message: string; }) => Promise<void>
 ```
 
 Displays the Intercom Message Composer with an initial message.
@@ -216,18 +219,14 @@ Displays the Intercom Message Composer with an initial message.
 | ------------- | --------------------------------- |
 | **`options`** | <code>{ message: string; }</code> |
 
-**Returns:** <code>any</code>
-
 --------------------
 
 
 ### displayHelpCenter()
 
 ```typescript
-displayHelpCenter() => any
+displayHelpCenter() => Promise<void>
 ```
-
-**Returns:** <code>any</code>
 
 --------------------
 
@@ -235,12 +234,10 @@ displayHelpCenter() => any
 ### hideMessenger()
 
 ```typescript
-hideMessenger() => any
+hideMessenger() => Promise<void>
 ```
 
 Hides the Intercom Messenger.
-
-**Returns:** <code>any</code>
 
 --------------------
 
@@ -248,12 +245,10 @@ Hides the Intercom Messenger.
 ### displayLauncher()
 
 ```typescript
-displayLauncher() => any
+displayLauncher() => Promise<void>
 ```
 
-Displays the Intercom Launcher.
-
-**Returns:** <code>any</code>
+Displays the default Intercom Launcher.
 
 --------------------
 
@@ -261,12 +256,10 @@ Displays the Intercom Launcher.
 ### hideLauncher()
 
 ```typescript
-hideLauncher() => any
+hideLauncher() => Promise<void>
 ```
 
 Hides the Intercom Launcher.
-
-**Returns:** <code>any</code>
 
 --------------------
 
@@ -274,12 +267,10 @@ Hides the Intercom Launcher.
 ### displayInAppMessages()
 
 ```typescript
-displayInAppMessages() => any
+displayInAppMessages() => Promise<void>
 ```
 
 Displays Intercom In-App Messages.
-
-**Returns:** <code>any</code>
 
 --------------------
 
@@ -287,12 +278,10 @@ Displays Intercom In-App Messages.
 ### hideInAppMessages()
 
 ```typescript
-hideInAppMessages() => any
+hideInAppMessages() => Promise<void>
 ```
 
 Hides Intercom In-App Messages.
-
-**Returns:** <code>any</code>
 
 --------------------
 
@@ -300,14 +289,12 @@ Hides Intercom In-App Messages.
 ### displayCarousel(...)
 
 ```typescript
-displayCarousel(options: { carouselId: string; }) => any
+displayCarousel(options: { carouselId: string; }) => Promise<void>
 ```
 
 | Param         | Type                                 |
 | ------------- | ------------------------------------ |
 | **`options`** | <code>{ carouselId: string; }</code> |
-
-**Returns:** <code>any</code>
 
 --------------------
 
@@ -315,7 +302,7 @@ displayCarousel(options: { carouselId: string; }) => any
 ### setUserHash(...)
 
 ```typescript
-setUserHash(options: { hmac: string; }) => any
+setUserHash(options: { hmac: string; }) => Promise<void>
 ```
 
 Sets the HMAC user hash for Intercom Identity Verification.
@@ -324,15 +311,13 @@ Sets the HMAC user hash for Intercom Identity Verification.
 | ------------- | ------------------------------ |
 | **`options`** | <code>{ hmac: string; }</code> |
 
-**Returns:** <code>any</code>
-
 --------------------
 
 
 ### setBottomPadding(...)
 
 ```typescript
-setBottomPadding(options: { value: string; }) => any
+setBottomPadding(options: { value: string; }) => Promise<void>
 ```
 
 Sets the bottom padding for the Intercom Messenger.
@@ -341,15 +326,13 @@ Sets the bottom padding for the Intercom Messenger.
 | ------------- | ------------------------------- |
 | **`options`** | <code>{ value: string; }</code> |
 
-**Returns:** <code>any</code>
-
 --------------------
 
 
 ### sendPushTokenToIntercom(...)
 
 ```typescript
-sendPushTokenToIntercom(options: { value: string; }) => any
+sendPushTokenToIntercom(options: { value: string; }) => Promise<void>
 ```
 
 Sends a push token to Intercom.
@@ -358,15 +341,13 @@ Sends a push token to Intercom.
 | ------------- | ------------------------------- |
 | **`options`** | <code>{ value: string; }</code> |
 
-**Returns:** <code>any</code>
-
 --------------------
 
 
 ### receivePush(...)
 
 ```typescript
-receivePush(notification: IntercomPushNotificationData) => any
+receivePush(notification: IntercomPushNotificationData) => Promise<void>
 ```
 
 Processes a received Intercom push notification.
@@ -375,22 +356,18 @@ Processes a received Intercom push notification.
 | ------------------ | ------------------------------------------------------------------------------------- |
 | **`notification`** | <code><a href="#intercompushnotificationdata">IntercomPushNotificationData</a></code> |
 
-**Returns:** <code>any</code>
-
 --------------------
 
 
 ### displayArticle(...)
 
 ```typescript
-displayArticle(options: { articleId: string; }) => any
+displayArticle(options: { articleId: string; }) => Promise<void>
 ```
 
 | Param         | Type                                |
 | ------------- | ----------------------------------- |
 | **`options`** | <code>{ articleId: string; }</code> |
-
-**Returns:** <code>any</code>
 
 --------------------
 
@@ -398,16 +375,14 @@ displayArticle(options: { articleId: string; }) => any
 ### presentContent(...)
 
 ```typescript
-presentContent(options: { contentType: IntercomContent; contentId: string; }) => any
+presentContent(options: { contentType: IntercomContent; contentId: string; }) => Promise<void>
 ```
 
-Presents an Intercom content item (Article, Carousel, or Survey) by its type and ID.
+Presents an Intercom content item by its type and ID.
 
 | Param         | Type                                                                                             |
 | ------------- | ------------------------------------------------------------------------------------------------ |
 | **`options`** | <code>{ contentType: <a href="#intercomcontent">IntercomContent</a>; contentId: string; }</code> |
-
-**Returns:** <code>any</code>
 
 --------------------
 
@@ -415,16 +390,14 @@ Presents an Intercom content item (Article, Carousel, or Survey) by its type and
 ### present(...)
 
 ```typescript
-present(options: { space: IntercomSpace; }) => any
+present(options: { space: IntercomSpace; }) => Promise<void>
 ```
 
-Presents the Intercom's Help Center, Messenger, or Home based on the selected space.
+Presents the Intercom's space.
 
 | Param         | Type                                                                |
 | ------------- | ------------------------------------------------------------------- |
 | **`options`** | <code>{ space: <a href="#intercomspace">IntercomSpace</a>; }</code> |
-
-**Returns:** <code>any</code>
 
 --------------------
 
@@ -432,12 +405,10 @@ Presents the Intercom's Help Center, Messenger, or Home based on the selected sp
 ### setupUnreadConversationListener()
 
 ```typescript
-setupUnreadConversationListener() => any
+setupUnreadConversationListener() => Promise<void>
 ```
 
 Setup listener for unread conversation count updates.
-
-**Returns:** <code>any</code>
 
 --------------------
 
@@ -445,12 +416,10 @@ Setup listener for unread conversation count updates.
 ### removeUnreadConversationListener()
 
 ```typescript
-removeUnreadConversationListener() => any
+removeUnreadConversationListener() => Promise<void>
 ```
 
 Remove listener for unread conversation count updates.
-
-**Returns:** <code>any</code>
 
 --------------------
 
@@ -458,12 +427,30 @@ Remove listener for unread conversation count updates.
 ### getUnreadConversationCount()
 
 ```typescript
-getUnreadConversationCount() => any
+getUnreadConversationCount() => Promise<{ unreadCount: number; }>
 ```
 
 Get current unread conversation count.
 
-**Returns:** <code>any</code>
+**Returns:** <code>Promise&lt;{ unreadCount: number; }&gt;</code>
+
+--------------------
+
+
+### addListener(...)
+
+```typescript
+addListener(eventName: 'updateUnreadCount', listenerFunc: (data: { unreadCount: number; }) => void) => Promise<PluginListenerHandle> & PluginListenerHandle
+```
+
+Listen for when the unread conversation count is changed.
+
+| Param              | Type                                                     |
+| ------------------ | -------------------------------------------------------- |
+| **`eventName`**    | <code>"updateUnreadCount"</code>                         |
+| **`listenerFunc`** | <code>(data: { unreadCount: number; }) =&gt; void</code> |
+
+**Returns:** <code>Promise&lt;<a href="#pluginlistenerhandle">PluginListenerHandle</a>&gt; & <a href="#pluginlistenerhandle">PluginListenerHandle</a></code>
 
 --------------------
 
@@ -471,25 +458,51 @@ Get current unread conversation count.
 ### Interfaces
 
 
+#### IntercomWebConfig
+
+<a href="#intercomwebconfig">IntercomWebConfig</a> Interface
+
+Represent configs that are available on Intercom Web SDK.
+
+| Prop                           | Type                                                                        | Description                                                                                                                                                                                                                                                           |
+| ------------------------------ | --------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`app_id`**                   | <code>string</code>                                                         | Configure Intercom Web APP ID. The APP ID of your Intercom app which will indicate where to store any data. Only available for Web                                                                                                                                    |
+| **`api_base`**                 | <code><a href="#intercomregionalapibase">IntercomRegionalApiBase</a></code> | Configure Intercom's regional API baseurl. For customers who are using Regional Data Hosting for Intercom, there is an additional parameter to set, to ensure your Messenger is pointing to your Regional workspace. Only available for Web                           |
+| **`custom_launcher_selector`** | <code>string</code>                                                         | Configure Intercom custom launcher selector. The CSS selector of an element to trigger Intercom("show") in order to activate the messenger. To target an element by ID: "#id_of_element". To target elements by class ".classname_of_elements" Only available for Web |
+| **`alignment`**                | <code><a href="#intercomalignment">IntercomAlignment</a></code>             | Configure Intercom default launcher alignment. Dictate the alignment of the default launcher icon to be on the left/right. Possible values: "left" or "right" (any other value is treated as right). Only available for Web                                           |
+| **`vertical_padding`**         | <code>number</code>                                                         | Configure Intercom default launcher icon's vertical padding. Move the default launcher icon vertically. Padding from bottom of screen. Minimum value: 20. Does not work on mobile. Only available for Web                                                             |
+| **`horizontal_padding`**       | <code>number</code>                                                         | Configure Intercom default launcher icon's horizontal padding. Move the default launcher icon horizontally. Padding from right side of screen Minimum value: 20. Does not work on mobile. Only available for Web                                                      |
+| **`hide_default_launcher`**    | <code>boolean</code>                                                        | Configure Intercom default launcher icon's visibility. Hide the default launcher icon. Setting to false will forcefully show the launcher icon. Only available for Web                                                                                                |
+| **`session_duration`**         | <code>number</code>                                                         | Configure Intercom session duration. Time in milliseconds for the Intercom session to be considered active. A value of 5 * 60 * 1000 would set the expiry time to be 5 minutes Only available for Web                                                                 |
+| **`action_color`**             | <code>string</code>                                                         | Configure action color for Intercom. Used in button links and more to highlight and emphasise. The color string can be any valid CSS Color Name HEX or RGB Only available for Web                                                                                     |
+| **`background_color`**         | <code>string</code>                                                         | Configure background color for Intercom. Used behind your team profile and other attributes. The color string can be any valid CSS Color Name HEX or RGB Only available for Web                                                                                       |
+
+
 #### IntercomUserUpdateOptions
 
 <a href="#intercomuserupdateoptions">IntercomUserUpdateOptions</a> Interface
+
 Represents the options for updating a user's attributes in Intercom.
 
-| Prop                   | Type                                 |
-| ---------------------- | ------------------------------------ |
-| **`userId`**           | <code>string</code>                  |
-| **`email`**            | <code>string</code>                  |
-| **`name`**             | <code>string</code>                  |
-| **`phone`**            | <code>string</code>                  |
-| **`languageOverride`** | <code>string</code>                  |
-| **`customAttributes`** | <code>{ [key: string]: any; }</code> |
+Only available for iOS and Android.
+
+| Prop                   | Type                                   |
+| ---------------------- | -------------------------------------- |
+| **`userId`**           | <code>string</code>                    |
+| **`email`**            | <code>string</code>                    |
+| **`name`**             | <code>string</code>                    |
+| **`phone`**            | <code>string</code>                    |
+| **`languageOverride`** | <code>string</code>                    |
+| **`customAttributes`** | <code>Record&lt;string, any&gt;</code> |
 
 
 #### IntercomPushNotificationData
 
 <a href="#intercompushnotificationdata">IntercomPushNotificationData</a> Interface
+
 Represents the structure of a received Intercom push notification.
+
+Only available for iOS and Android.
 
 | Prop                            | Type                |
 | ------------------------------- | ------------------- |
@@ -509,25 +522,54 @@ Represents the structure of a received Intercom push notification.
 | **`priority`**                  | <code>number</code> |
 
 
+#### PluginListenerHandle
+
+| Prop         | Type                                      |
+| ------------ | ----------------------------------------- |
+| **`remove`** | <code>() =&gt; Promise&lt;void&gt;</code> |
+
+
 ### Enums
+
+
+#### IntercomRegionalApiBase
+
+| Members  | Value                                         |
+| -------- | --------------------------------------------- |
+| **`Us`** | <code>'https://api-iam.intercom.io'</code>    |
+| **`Eu`** | <code>'https://api-iam.eu.intercom.io'</code> |
+| **`Au`** | <code>'https://api-iam.au.intercom.io'</code> |
+
+
+#### IntercomAlignment
+
+| Members     | Value                |
+| ----------- | -------------------- |
+| **`Left`**  | <code>'left'</code>  |
+| **`Right`** | <code>'right'</code> |
 
 
 #### IntercomContent
 
-| Members        | Value                   |
-| -------------- | ----------------------- |
-| **`Article`**  | <code>'article'</code>  |
-| **`Carousel`** | <code>'carousel'</code> |
-| **`Survey`**   | <code>'survey'</code>   |
+| Members         | Value                    | Description                        |
+| --------------- | ------------------------ | ---------------------------------- |
+| **`Article`**   | <code>'article'</code>   |                                    |
+| **`Survey`**    | <code>'survey'</code>    |                                    |
+| **`Carousel`**  | <code>'carousel'</code>  | Only available for iOS and Android |
+| **`Checklist`** | <code>'checklist'</code> | Only available for Web             |
+| **`News`**      | <code>'news'</code>      | Only available for Web             |
+| **`Tour`**      | <code>'tour'</code>      | Only available for Web             |
 
 
 #### IntercomSpace
 
-| Members          | Value                     |
-| ---------------- | ------------------------- |
-| **`Home`**       | <code>'home'</code>       |
-| **`Messages`**   | <code>'messages'</code>   |
-| **`HelpCenter`** | <code>'helpCenter'</code> |
+| Members          | Value                   | Description            |
+| ---------------- | ----------------------- | ---------------------- |
+| **`Home`**       | <code>'home'</code>     |                        |
+| **`Messages`**   | <code>'messages'</code> |                        |
+| **`HelpCenter`** | <code>'help'</code>     |                        |
+| **`News`**       | <code>'news'</code>     | Only available on web. |
+| **`Tasks`**      | <code>'tasks'</code>    | Only available on web. |
 
 </docgen-api>
 
