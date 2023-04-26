@@ -1,0 +1,4 @@
+included:
+  - ios
+
+extends: '@ionic/swiftlint-config'

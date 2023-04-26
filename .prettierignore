@@ -1,0 +1,5 @@
+dist
+ios
+android/*
+!android/src
+CHANGELOG.md
