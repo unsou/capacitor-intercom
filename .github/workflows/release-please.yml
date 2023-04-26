@@ -27,3 +27,4 @@ jobs:
           command: release-pr
           pull-request-title-pattern: 'chore${scope}: release${component} v${version}'
           pull-request-header: ''
+          include-v-in-tag: true
