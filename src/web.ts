@@ -145,13 +145,36 @@ export class IntercomWeb extends WebPlugin implements IntercomPlugin {
   }
 
   async updateUser(options: IntercomUserUpdateOptions): Promise<void> {
+    let companyOptions = undefined;
+    if (options.company) {
+      const companyEntries = Object.entries({
+        name: options.company.name,
+        company_id: options.company.companyId,
+        created_at: options.company.createdAt,
+        plan: options.company.plan,
+        monthly_spend: options.company.monthlySpend,
+        ...options.company.customAttributes,
+      });
+
+      const company = companyEntries.filter(
+        ([_, value]) => value !== undefined,
+      );
+      if (company.length) {
+        companyOptions = Object.fromEntries(
+          company,
+        ) as IntercomWebConfig['company'];
+      }
+    }
+
     const configEntries = Object.entries({
       user_id: options.userId,
       language_override: options.languageOverride,
       phone: options.phone,
       name: options.name,
+      company: companyOptions,
       ...options.customAttributes,
     }).filter(([_, value]) => value !== undefined);
+
     const webConfig: IntercomWebConfig = Object.fromEntries(configEntries);
     this.updateConfig(webConfig);
   }

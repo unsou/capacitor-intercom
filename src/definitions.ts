@@ -478,6 +478,7 @@ export interface IntercomUserUpdateOptions {
   phone?: string;
   languageOverride?: string;
   customAttributes?: Record<string, any>;
+  company?: CompanyOption;
 }
 
 /**
@@ -557,6 +558,34 @@ export interface IntercomStatic {
     ...params: Parameters<IntercomCommandSignature[Command]>
   ): ReturnType<IntercomCommandSignature[Command]>;
   booted: boolean;
+}
+
+/**
+ * CompanyOption Interface.
+ *
+ * Represents Intercom option to include company details.
+ *
+ * @since 4.2.2
+ */
+export interface CompanyOption {
+  /**
+   * Required for Web
+   */
+  name: string;
+
+  /**
+   * Required for Native platforms
+   */
+  companyId: string;
+
+  /**
+   * Unix timestamp
+   */
+  createdAt?: number;
+
+  monthlySpend?: number;
+  plan?: string;
+  customAttributes?: Record<string, any>;
 }
 
 /**

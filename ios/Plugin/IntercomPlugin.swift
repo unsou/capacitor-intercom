@@ -153,8 +153,21 @@ public class IntercomPlugin: CAPPlugin {
         if (customAttributes != nil) {
             userAttributes.customAttributes = customAttributes
         }
-        Intercom.updateUser(with: userAttributes)
-        call.resolve()
+        
+        if let company = constructCompany(call.getObject("company")) {
+            userAttributes.companies = [company]
+        }
+        
+        DispatchQueue.main.async {
+            Intercom.updateUser(with: userAttributes) { result in
+                switch result {
+                case .success:
+                    call.resolve()
+                case .failure(let error):
+                    call.reject("Error updating user: \(error.localizedDescription)")
+                }
+            }
+        }
     }
     
     @objc func logout(_ call: CAPPluginCall) {
@@ -302,6 +315,41 @@ public class IntercomPlugin: CAPPlugin {
     @objc func getUnreadConversationCount(_ call: CAPPluginCall) {
         let unreadCount = Intercom.unreadConversationCount()
         call.resolve(["unreadCount": unreadCount])
+    }
+    
+    private func constructCompany(_ companyData: JSObject?) -> ICMCompany? {
+        guard let company = companyData else { return nil }
+        
+        let companyAttributes = ICMCompany()
+        
+        companyAttributes.companyId = company["companyId"] as? String ?? ""
+            
+        let name = company["name"] as? String ?? nil
+        if (name != nil) {
+            companyAttributes.name = name
+        }
+            
+        let createdAt = company["createdAt"] as? TimeInterval ?? 0
+        if (createdAt != 0) {
+            companyAttributes.createdAt = Date(timeIntervalSince1970: TimeInterval(createdAt))
+        }
+        
+        let monthlySpend = company["monthlySpend"] as? NSNumber ?? nil
+        if (monthlySpend != nil) {
+            companyAttributes.monthlySpend = monthlySpend
+        }
+        
+        let plan = company["plan"] as? String ?? nil
+        if (plan != nil) {
+            companyAttributes.plan = plan
+        }
+        
+        let customAttributes = company["customAttributes"] as? [String: Any] ?? nil
+        if (customAttributes != nil) {
+            companyAttributes.customAttributes = customAttributes
+        }
+        
+        return companyAttributes
     }
 }
 
