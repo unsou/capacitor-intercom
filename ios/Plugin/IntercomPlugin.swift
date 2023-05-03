@@ -51,20 +51,24 @@ public class IntercomPlugin: CAPPlugin {
         
         if ((email) != nil) {
             attributes.email = email
-            Intercom.loginUser(with: attributes) { result in
-                switch result {
-                case .success: call.resolve()
-                case .failure(let error): call.reject("Error logging in: \(error.localizedDescription)")
+            DispatchQueue.main.async {
+                Intercom.loginUser(with: attributes) { result in
+                    switch result {
+                    case .success: call.resolve()
+                    case .failure(let error): call.reject("Error logging in: \(error.localizedDescription)")
+                    }
                 }
             }
         }
         
         if ((userId) != nil) {
             attributes.userId = userId
-            Intercom.loginUser(with: attributes) { result in
-                switch result {
-                case .success: call.resolve()
-                case .failure(let error): call.reject("Error logging in: \(error.localizedDescription)")
+            DispatchQueue.main.async {
+                Intercom.loginUser(with: attributes) { result in
+                    switch result {
+                    case .success: call.resolve()
+                    case .failure(let error): call.reject("Error logging in: \(error.localizedDescription)")
+                    }
                 }
             }
         }
@@ -77,20 +81,24 @@ public class IntercomPlugin: CAPPlugin {
         
         if ((email) != nil) {
             attributes.email = email
-            Intercom.loginUser(with: attributes) { result in
-                switch result {
-                case .success: call.resolve()
-                case .failure(let error): call.reject("Error logging in: \(error.localizedDescription)")
+            DispatchQueue.main.async {
+                Intercom.loginUser(with: attributes) { result in
+                    switch result {
+                    case .success: call.resolve()
+                    case .failure(let error): call.reject("Error logging in: \(error.localizedDescription)")
+                    }
                 }
             }
         }
         
         if ((userId) != nil) {
             attributes.userId = userId
-            Intercom.loginUser(with: attributes) { result in
-                switch result {
-                case .success: call.resolve()
-                case .failure(let error): call.reject("Error logging in: \(error.localizedDescription)")
+            DispatchQueue.main.async {
+                Intercom.loginUser(with: attributes) { result in
+                    switch result {
+                    case .success: call.resolve()
+                    case .failure(let error): call.reject("Error logging in: \(error.localizedDescription)")
+                    }
                 }
             }
         }
@@ -98,19 +106,23 @@ public class IntercomPlugin: CAPPlugin {
     
     @available(*, deprecated, message: "This method is deprecated, use loginIdentifiedUser() instead.")
     @objc func registerUnidentifiedUser(_ call: CAPPluginCall) {
-        Intercom.loginUnidentifiedUser { result in
-            switch result {
-            case .success: call.resolve()
-            case .failure(let error): call.reject("Error loggin in unidentified user: \(error.localizedDescription)")
+        DispatchQueue.main.async {
+            Intercom.loginUnidentifiedUser { result in
+                switch result {
+                case .success: call.resolve()
+                case .failure(let error): call.reject("Error loggin in unidentified user: \(error.localizedDescription)")
+                }
             }
         }
     }
     
     @objc func loginUnidentifiedUser(_ call: CAPPluginCall) {
-        Intercom.loginUnidentifiedUser { result in
-            switch result {
-            case .success: call.resolve()
-            case .failure(let error): call.reject("Error loggin in unidentified user: \(error.localizedDescription)")
+        DispatchQueue.main.async {
+            Intercom.loginUnidentifiedUser { result in
+                switch result {
+                case .success: call.resolve()
+                case .failure(let error): call.reject("Error loggin in unidentified user: \(error.localizedDescription)")
+                }
             }
         }
     }
