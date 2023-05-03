@@ -159,7 +159,6 @@ export class IntercomWeb extends WebPlugin implements IntercomPlugin {
   async logout(): Promise<void> {
     this.callIntercom('shutdown');
     this.resetState();
-    this.callIntercom('boot', this.state.config);
   }
 
   async logEvent(options: { name: string; data?: any }): Promise<void> {
@@ -277,18 +276,7 @@ export class IntercomWeb extends WebPlugin implements IntercomPlugin {
    * @private
    */
   private resetState() {
-    this.state.config = {
-      app_id: this.state.config.app_id,
-      api_base: this.state.config.api_base,
-      alignment: this.state.config.alignment,
-      custom_launcher_selector: this.state.config.custom_launcher_selector,
-      hide_default_launcher: this.state.config.hide_default_launcher,
-      horizontal_padding: this.state.config.horizontal_padding,
-      session_duration: this.state.config.session_duration,
-      vertical_padding: this.state.config.vertical_padding,
-      action_color: this.state.config.action_color,
-      background_color: this.state.config.background_color,
-    };
+    this.state.config = {};
     this.state.unreadCount = 0;
     this.state.unreadListenerAttached = false;
   }
