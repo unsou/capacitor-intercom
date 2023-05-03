@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.2.2](https://github.com/Fiksuruoka-fi/capacitor-intercom/compare/v4.2.1...v4.2.2) (2023-05-03)
+
+
+### Bug Fixes
+
+* **ios:** :bug: moved ios methods to main thread ([dc52787](https://github.com/Fiksuruoka-fi/capacitor-intercom/commit/dc5278789098915581a9209266b978a55f423d45))
+* **web:** :bug: removed unwanted 'boot' on logout ([eaf9f53](https://github.com/Fiksuruoka-fi/capacitor-intercom/commit/eaf9f53f9fa9eed7a4dc421a27088e6bfbca166b))
+
 ## [4.2.1](https://github.com/Fiksuruoka-fi/capacitor-intercom/compare/v4.2.0...v4.2.1) (2023-04-26)
 
 
