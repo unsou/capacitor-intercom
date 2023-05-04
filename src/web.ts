@@ -145,33 +145,18 @@ export class IntercomWeb extends WebPlugin implements IntercomPlugin {
   }
 
   async updateUser(options: IntercomUserUpdateOptions): Promise<void> {
-    let companyOptions = undefined;
-    if (options.company) {
-      const companyEntries = Object.entries({
-        name: options.company.name,
-        company_id: options.company.companyId,
-        created_at: options.company.createdAt,
-        plan: options.company.plan,
-        monthly_spend: options.company.monthlySpend,
-        ...options.company.customAttributes,
-      });
-
-      const company = companyEntries.filter(
-        ([_, value]) => value !== undefined,
-      );
-      if (company.length) {
-        companyOptions = Object.fromEntries(
-          company,
-        ) as IntercomWebConfig['company'];
-      }
-    }
+    const company = this.constructCompany(options.company);
+    const companies = options.companies
+      ?.map(this.constructCompany)
+      .filter(company => !!company) as Intercom_.IntercomCompany[];
 
     const configEntries = Object.entries({
       user_id: options.userId,
       language_override: options.languageOverride,
       phone: options.phone,
       name: options.name,
-      company: companyOptions,
+      company,
+      companies,
       ...options.customAttributes,
     }).filter(([_, value]) => value !== undefined);
 
@@ -291,6 +276,27 @@ export class IntercomWeb extends WebPlugin implements IntercomPlugin {
     return {
       unreadCount: this.state.unreadCount,
     };
+  }
+
+  private constructCompany(
+    company: IntercomUserUpdateOptions['company'],
+  ): IntercomWebConfig['company'] {
+    if (company) {
+      const companyEntries = Object.entries({
+        name: company.name,
+        company_id: company.companyId,
+        created_at: company.createdAt,
+        plan: company.plan,
+        monthly_spend: company.monthlySpend,
+        ...company.customAttributes,
+      }).filter(([_, value]) => value !== undefined);
+
+      if (companyEntries.length) {
+        return Object.fromEntries(
+          companyEntries,
+        ) as IntercomWebConfig['company'];
+      }
+    }
   }
 
   /**

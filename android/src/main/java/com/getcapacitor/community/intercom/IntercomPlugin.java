@@ -191,6 +191,17 @@ public class IntercomPlugin extends Plugin implements UnreadConversationCountLis
             Company company = constructCompany(call.getObject("company"));
             if (company != null) {
                 builder.withCompany(company);
+            } else {
+                JSArray companies = call.getArray("companies", null);
+                if (companies != null) {
+                    List<JSObject> companyList = companies.toList();
+                    for (JSObject c : companyList) {
+                        Company constructedComp = constructCompany(c);
+                        if (constructedComp != null) {
+                            builder.withCompany(constructedComp);
+                        }
+                    }
+                }
             }
         } catch (JSONException e) {
             call.reject("Error constructing company: " + e.getMessage());

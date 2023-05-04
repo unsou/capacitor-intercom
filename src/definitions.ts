@@ -479,6 +479,7 @@ export interface IntercomUserUpdateOptions {
   languageOverride?: string;
   customAttributes?: Record<string, any>;
   company?: CompanyOption;
+  companies?: CompanyOption[];
 }
 
 /**

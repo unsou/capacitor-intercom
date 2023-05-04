@@ -156,6 +156,15 @@ public class IntercomPlugin: CAPPlugin {
         
         if let company = constructCompany(call.getObject("company")) {
             userAttributes.companies = [company]
+        } else {
+            if let companies = call.getArray("companies") as? [JSObject] {
+                if (!companies.isEmpty) {
+                    let companyArray = companies.compactMap { c in
+                        constructCompany(c)
+                    }
+                    userAttributes.companies = companyArray
+                }
+            }
         }
         
         DispatchQueue.main.async {
