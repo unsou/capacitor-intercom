@@ -157,7 +157,7 @@ export class IntercomWeb extends WebPlugin implements IntercomPlugin {
       name: options.name,
       company,
       companies,
-      ...options.customAttributes,
+      ...(options.customAttributes || {}),
     }).filter(([_, value]) => value !== undefined);
 
     const webConfig: IntercomWebConfig = Object.fromEntries(configEntries);
@@ -288,7 +288,7 @@ export class IntercomWeb extends WebPlugin implements IntercomPlugin {
         created_at: company.createdAt,
         plan: company.plan,
         monthly_spend: company.monthlySpend,
-        ...company.customAttributes,
+        ...(company.customAttributes || {}),
       }).filter(([_, value]) => value !== undefined);
 
       if (companyEntries.length) {
