@@ -11,11 +11,12 @@ public class IntercomPlugin: CAPPlugin {
     public override func load() {
         let apiKey = getConfig().getString("iosApiKey") ?? "ADD_IN_CAPACITOR_CONFIG_JSON"
         let appId = getConfig().getString("iosAppId") ?? "ADD_IN_CAPACITOR_CONFIG_JSON"
+        
         Intercom.setApiKey(apiKey, forAppId: appId)
         
-#if DEBUG
+        #if DEBUG
         Intercom.enableLogging()
-#endif
+        #endif
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.didRegisterWithToken(notification:)), name: Notification.Name.capacitorDidRegisterForRemoteNotifications, object: nil)
     }
@@ -25,7 +26,10 @@ public class IntercomPlugin: CAPPlugin {
         guard let deviceToken = notification.object as? Data else {
             return
         }
-        Intercom.setDeviceToken(deviceToken)
+        
+        DispatchQueue.main.async {
+            Intercom.setDeviceToken(deviceToken)
+        }
     }
     
     @objc func setupUnreadConversationListener(_ call: CAPPluginCall) {
