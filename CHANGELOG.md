@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.3.0](https://github.com/Fiksuruoka-fi/capacitor-intercom/compare/v4.2.2...v4.3.0) (2023-05-05)
+
+
+### Features
+
+* **intercom:** :sparkles: adds support for multiple companies ([c59020e](https://github.com/Fiksuruoka-fi/capacitor-intercom/commit/c59020efecf0e98b33e19b232ecf9ee7aa6b1278))
+
+
+### Bug Fixes
+
+* **intercom:** :bug: customAttributes might be null ([0ab1531](https://github.com/Fiksuruoka-fi/capacitor-intercom/commit/0ab1531c314fe43a821ea59f8b90bdf99e6febc2))
+* **intercom:** :bug: fixes registering ios push notification token ([0dad7b1](https://github.com/Fiksuruoka-fi/capacitor-intercom/commit/0dad7b11e9e55fd23b9e8e522c4eb646728756c2))
+* **intercom:** :bug: fixes resolving the unreadConversationListener setup ([e45b3de](https://github.com/Fiksuruoka-fi/capacitor-intercom/commit/e45b3deadd953a9fa7f14840ce8ca1c8e0679625))
+
 ## [4.2.2](https://github.com/Fiksuruoka-fi/capacitor-intercom/compare/v4.2.1...v4.2.2) (2023-05-03)
 
 
