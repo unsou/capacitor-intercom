@@ -33,6 +33,7 @@ public class IntercomPlugin: CAPPlugin {
            selector: #selector(self.updateUnreadCount(notification:)),
                name: NSNotification.Name.IntercomUnreadConversationCountDidChange,
              object: nil)
+        call.resolve()
     }
     
     @objc func updateUnreadCount(notification: NSNotification) {
@@ -180,8 +181,10 @@ public class IntercomPlugin: CAPPlugin {
     }
     
     @objc func logout(_ call: CAPPluginCall) {
-        Intercom.logout()
-        call.resolve()
+        DispatchQueue.main.async {
+            Intercom.logout()
+            call.resolve()
+        }
     }
     
     @objc func logEvent(_ call: CAPPluginCall) {
@@ -190,14 +193,14 @@ public class IntercomPlugin: CAPPlugin {
             return
         }
         
-        let metaData = call.getObject("data")
-        
-        if let metaData = call.getObject("data") {
-            Intercom.logEvent(withName: eventName, metaData: metaData)
-        } else {
-            Intercom.logEvent(withName: eventName)
+        DispatchQueue.main.async {
+            if let metaData = call.getObject("data") {
+                Intercom.logEvent(withName: eventName, metaData: metaData)
+            } else {
+                Intercom.logEvent(withName: eventName)
+            }
+            call.resolve()
         }
-        call.resolve()
     }
     
     @objc func present(_ call: CAPPluginCall) {
