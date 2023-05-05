@@ -504,14 +504,31 @@ Represents the options for updating a user's attributes in Intercom.
 
 Only available for iOS and Android.
 
-| Prop                   | Type                                   |
-| ---------------------- | -------------------------------------- |
-| **`userId`**           | <code>string</code>                    |
-| **`email`**            | <code>string</code>                    |
-| **`name`**             | <code>string</code>                    |
-| **`phone`**            | <code>string</code>                    |
-| **`languageOverride`** | <code>string</code>                    |
-| **`customAttributes`** | <code>Record&lt;string, any&gt;</code> |
+| Prop                   | Type                                                    |
+| ---------------------- | ------------------------------------------------------- |
+| **`userId`**           | <code>string</code>                                     |
+| **`email`**            | <code>string</code>                                     |
+| **`name`**             | <code>string</code>                                     |
+| **`phone`**            | <code>string</code>                                     |
+| **`languageOverride`** | <code>string</code>                                     |
+| **`customAttributes`** | <code>Record&lt;string, any&gt;</code>                  |
+| **`company`**          | <code><a href="#companyoption">CompanyOption</a></code> |
+
+
+#### CompanyOption
+
+<a href="#companyoption">CompanyOption</a> Interface.
+
+Represents Intercom option to include company details.
+
+| Prop                   | Type                                   | Description                   |
+| ---------------------- | -------------------------------------- | ----------------------------- |
+| **`name`**             | <code>string</code>                    | Required for Web              |
+| **`companyId`**        | <code>string</code>                    | Required for Native platforms |
+| **`createdAt`**        | <code>number</code>                    | Unix timestamp                |
+| **`monthlySpend`**     | <code>number</code>                    |                               |
+| **`plan`**             | <code>string</code>                    |                               |
+| **`customAttributes`** | <code>Record&lt;string, any&gt;</code> |                               |
 
 
 #### IntercomPushNotificationData

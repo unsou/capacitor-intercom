@@ -11,11 +11,12 @@ public class IntercomPlugin: CAPPlugin {
     public override func load() {
         let apiKey = getConfig().getString("iosApiKey") ?? "ADD_IN_CAPACITOR_CONFIG_JSON"
         let appId = getConfig().getString("iosAppId") ?? "ADD_IN_CAPACITOR_CONFIG_JSON"
+        
         Intercom.setApiKey(apiKey, forAppId: appId)
         
-#if DEBUG
+        #if DEBUG
         Intercom.enableLogging()
-#endif
+        #endif
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.didRegisterWithToken(notification:)), name: Notification.Name.capacitorDidRegisterForRemoteNotifications, object: nil)
     }
@@ -25,7 +26,10 @@ public class IntercomPlugin: CAPPlugin {
         guard let deviceToken = notification.object as? Data else {
             return
         }
-        Intercom.setDeviceToken(deviceToken)
+        
+        DispatchQueue.main.async {
+            Intercom.setDeviceToken(deviceToken)
+        }
     }
     
     @objc func setupUnreadConversationListener(_ call: CAPPluginCall) {
@@ -33,6 +37,7 @@ public class IntercomPlugin: CAPPlugin {
            selector: #selector(self.updateUnreadCount(notification:)),
                name: NSNotification.Name.IntercomUnreadConversationCountDidChange,
              object: nil)
+        call.resolve()
     }
     
     @objc func updateUnreadCount(notification: NSNotification) {
@@ -153,13 +158,37 @@ public class IntercomPlugin: CAPPlugin {
         if (customAttributes != nil) {
             userAttributes.customAttributes = customAttributes
         }
-        Intercom.updateUser(with: userAttributes)
-        call.resolve()
+        
+        if let company = constructCompany(call.getObject("company")) {
+            userAttributes.companies = [company]
+        } else {
+            if let companies = call.getArray("companies") as? [JSObject] {
+                if (!companies.isEmpty) {
+                    let companyArray = companies.compactMap { c in
+                        constructCompany(c)
+                    }
+                    userAttributes.companies = companyArray
+                }
+            }
+        }
+        
+        DispatchQueue.main.async {
+            Intercom.updateUser(with: userAttributes) { result in
+                switch result {
+                case .success:
+                    call.resolve()
+                case .failure(let error):
+                    call.reject("Error updating user: \(error.localizedDescription)")
+                }
+            }
+        }
     }
     
     @objc func logout(_ call: CAPPluginCall) {
-        Intercom.logout()
-        call.resolve()
+        DispatchQueue.main.async {
+            Intercom.logout()
+            call.resolve()
+        }
     }
     
     @objc func logEvent(_ call: CAPPluginCall) {
@@ -168,14 +197,14 @@ public class IntercomPlugin: CAPPlugin {
             return
         }
         
-        let metaData = call.getObject("data")
-        
-        if let metaData = call.getObject("data") {
-            Intercom.logEvent(withName: eventName, metaData: metaData)
-        } else {
-            Intercom.logEvent(withName: eventName)
+        DispatchQueue.main.async {
+            if let metaData = call.getObject("data") {
+                Intercom.logEvent(withName: eventName, metaData: metaData)
+            } else {
+                Intercom.logEvent(withName: eventName)
+            }
+            call.resolve()
         }
-        call.resolve()
     }
     
     @objc func present(_ call: CAPPluginCall) {
@@ -302,6 +331,41 @@ public class IntercomPlugin: CAPPlugin {
     @objc func getUnreadConversationCount(_ call: CAPPluginCall) {
         let unreadCount = Intercom.unreadConversationCount()
         call.resolve(["unreadCount": unreadCount])
+    }
+    
+    private func constructCompany(_ companyData: JSObject?) -> ICMCompany? {
+        guard let company = companyData else { return nil }
+        
+        let companyAttributes = ICMCompany()
+        
+        companyAttributes.companyId = company["companyId"] as? String ?? ""
+            
+        let name = company["name"] as? String ?? nil
+        if (name != nil) {
+            companyAttributes.name = name
+        }
+            
+        let createdAt = company["createdAt"] as? TimeInterval ?? 0
+        if (createdAt != 0) {
+            companyAttributes.createdAt = Date(timeIntervalSince1970: TimeInterval(createdAt))
+        }
+        
+        let monthlySpend = company["monthlySpend"] as? NSNumber ?? nil
+        if (monthlySpend != nil) {
+            companyAttributes.monthlySpend = monthlySpend
+        }
+        
+        let plan = company["plan"] as? String ?? nil
+        if (plan != nil) {
+            companyAttributes.plan = plan
+        }
+        
+        let customAttributes = company["customAttributes"] as? [String: Any] ?? nil
+        if (customAttributes != nil) {
+            companyAttributes.customAttributes = customAttributes
+        }
+        
+        return companyAttributes
     }
 }
 

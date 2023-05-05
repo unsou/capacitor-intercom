@@ -145,13 +145,21 @@ export class IntercomWeb extends WebPlugin implements IntercomPlugin {
   }
 
   async updateUser(options: IntercomUserUpdateOptions): Promise<void> {
+    const company = this.constructCompany(options.company);
+    const companies = options.companies
+      ?.map(this.constructCompany)
+      .filter(company => !!company) as Intercom_.IntercomCompany[];
+
     const configEntries = Object.entries({
       user_id: options.userId,
       language_override: options.languageOverride,
       phone: options.phone,
       name: options.name,
-      ...options.customAttributes,
+      company,
+      companies,
+      ...(options.customAttributes || {}),
     }).filter(([_, value]) => value !== undefined);
+
     const webConfig: IntercomWebConfig = Object.fromEntries(configEntries);
     this.updateConfig(webConfig);
   }
@@ -268,6 +276,27 @@ export class IntercomWeb extends WebPlugin implements IntercomPlugin {
     return {
       unreadCount: this.state.unreadCount,
     };
+  }
+
+  private constructCompany(
+    company: IntercomUserUpdateOptions['company'],
+  ): IntercomWebConfig['company'] {
+    if (company) {
+      const companyEntries = Object.entries({
+        name: company.name,
+        company_id: company.companyId,
+        created_at: company.createdAt,
+        plan: company.plan,
+        monthly_spend: company.monthlySpend,
+        ...(company.customAttributes || {}),
+      }).filter(([_, value]) => value !== undefined);
+
+      if (companyEntries.length) {
+        return Object.fromEntries(
+          companyEntries,
+        ) as IntercomWebConfig['company'];
+      }
+    }
   }
 
   /**
