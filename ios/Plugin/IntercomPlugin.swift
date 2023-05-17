@@ -266,7 +266,7 @@ public class IntercomPlugin: CAPPlugin {
     }
     
     @objc func setUserHash(_ call: CAPPluginCall) {
-        guard let hmac = call.getString("hmsc") else {
+        guard let hmac = call.getString("hmac") else {
             call.reject("hmac is missing or empty. Read intercom docs and generate it.")
             return
         }
