@@ -1,6 +1,6 @@
 {
-  "name": "@foodello/intercom",
-  "version": "4.3.0",
+  "name": "@hildorjr/capacitor-intercom",
+  "version": "4.3.1",
   "description": "Enable Intercom features for Capacitor apps",
   "main": "dist/plugin.cjs.js",
   "module": "dist/esm/index.js",
@@ -82,9 +82,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/fiksuruoka-fi/intercom"
+    "url": "git+https://github.com/fiksuruoka-fi/intercom.git"
   },
   "bugs": {
     "url": "https://github.com/fiksuruoka-fi/intercom/issues"
+  },
+  "homepage": "https://github.com/fiksuruoka-fi/intercom#readme",
+  "directories": {
+    "example": "example"
   }
 }
