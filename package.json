@@ -82,12 +82,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/fiksuruoka-fi/intercom.git"
+    "url": "git+https://github.com/hildorjr/capacitor-intercom.git"
   },
   "bugs": {
-    "url": "https://github.com/fiksuruoka-fi/intercom/issues"
+    "url": "https://github.com/hildorjr/capacitor-intercom/issues"
   },
-  "homepage": "https://github.com/fiksuruoka-fi/intercom#readme",
+  "homepage": "https://github.com/hildorjr/capacitor-intercom#readme",
   "directories": {
     "example": "example"
   }
