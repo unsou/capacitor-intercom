@@ -1,5 +1,5 @@
 {
-  "name": "@hildorjr/capacitor-intercom",
+  "name": "@manor-care/capacitor-intercom",
   "version": "5.0.0",
   "description": "Enable Intercom features for Capacitor apps",
   "main": "dist/plugin.cjs.js",
@@ -55,7 +55,7 @@
     "android/build.gradle",
     "dist/",
     "ios/Plugin/",
-    "HildorjrCapacitorIntercom.podspec"
+    "ManorCareCapacitorIntercom.podspec"
   ],
   "keywords": [
     "capacitor",
@@ -72,12 +72,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hildorjr/capacitor-intercom.git"
+    "url": "git+https://github.com/manor-care/capacitor-intercom.git"
   },
   "bugs": {
-    "url": "https://github.com/hildorjr/capacitor-intercom/issues"
+    "url": "https://github.com/manor-care/capacitor-intercom/issues"
   },
-  "homepage": "https://github.com/hildorjr/capacitor-intercom#readme",
+  "homepage": "https://github.com/manor-care/capacitor-intercom#readme",
   "directories": {
     "example": "example"
   }
