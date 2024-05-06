@@ -1,15 +1,15 @@
 <h2 align="center">Capacitor Intercom plugin</h2>
-<p align="center"><strong><code>@manor-care/capacitor-intercom</code></strong></p>
+<p align="center"><strong><code>@unsou/capacitor-intercom</code></strong></p>
 <p align="center">
   Capacitor plugin for enabling Intercom capabilities based on the Capacitor community plugin
 </p>
 
 <p align="center">
   <img src="https://img.shields.io/maintenance/yes/2023?style=flat-square" />
-  <a href="https://www.npmjs.com/package/@manor-care/capacitor-intercom"><img src="https://img.shields.io/npm/l/@manor-care/capacitor-intercom?style=flat-square" /></a>
+  <a href="https://www.npmjs.com/package/@unsou/capacitor-intercom"><img src="https://img.shields.io/npm/l/@unsou/capacitor-intercom?style=flat-square" /></a>
 <br>
-  <a href="https://www.npmjs.com/package/@manor-care/capacitor-intercom"><img src="https://img.shields.io/npm/dw/@manor-care/capacitor-intercom?style=flat-square" /></a>
-  <a href="https://www.npmjs.com/package/@manor-care/capacitor-intercom"><img src="https://img.shields.io/npm/v/@manor-care/capacitor-intercom?style=flat-square" /></a>
+  <a href="https://www.npmjs.com/package/@unsou/capacitor-intercom"><img src="https://img.shields.io/npm/dw/@unsou/capacitor-intercom?style=flat-square" /></a>
+  <a href="https://www.npmjs.com/package/@unsou/capacitor-intercom"><img src="https://img.shields.io/npm/v/@unsou/capacitor-intercom?style=flat-square" /></a>
   <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 <a href="#contributors"><img src="https://img.shields.io/badge/all%20contributors-14-orange?style=flat-square" /></a>
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
@@ -26,13 +26,13 @@ Thanks for the all the authors with their work in [`@capacitor-community/interco
 Using npm:
 
 ```bash
-npm install @manor-care/capacitor-intercom
+npm install @unsou/capacitor-intercom
 ```
 
 Using yarn:
 
 ```bash
-yarn add @manor-care/capacitor-intercom
+yarn add @unsou/capacitor-intercom
 ```
 
 Sync native files:
@@ -47,7 +47,7 @@ Import Intercom plugin into your project.
 
 ```js
 import { Capacitor } from '@capacitor/core';
-import { Intercom } from '@manor-care/capacitor-intercom';
+import { Intercom } from '@unsou/capacitor-intercom';
 import { PushNotifications } from '@capacitor/push-notifications';
 ```
 
