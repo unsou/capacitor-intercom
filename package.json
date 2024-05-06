@@ -55,7 +55,7 @@
     "android/build.gradle",
     "dist/",
     "ios/Plugin/",
-    "CapacitorIntercom.podspec"
+    "UnsouCapacitorIntercom.podspec"
   ],
   "keywords": [
     "capacitor",
