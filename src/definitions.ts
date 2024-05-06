@@ -433,7 +433,7 @@ export interface IntercomPlugin {
   addListener(
     eventName: 'updateUnreadCount',
     listenerFunc: (data: { unreadCount: number }) => void,
-  ): Promise<PluginListenerHandle> & PluginListenerHandle;
+  ): Promise<PluginListenerHandle>;
 }
 
 /**
