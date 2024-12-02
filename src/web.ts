@@ -5,11 +5,12 @@ import type {
   IntercomCommandSignature,
   IntercomPlugin,
   IntercomPushNotificationData,
+  IntercomSpace,
   IntercomUserUpdateOptions,
   IntercomWebConfig,
   State,
 } from './definitions';
-import { IntercomContent, IntercomSpace } from './definitions';
+import { IntercomContent, IntercomSpaces } from './definitions';
 
 export class IntercomWeb extends WebPlugin implements IntercomPlugin {
   private SCRIPT_ID = 'capacitor-intercom';
@@ -113,20 +114,20 @@ export class IntercomWeb extends WebPlugin implements IntercomPlugin {
     const { space } = options;
 
     switch (space) {
-      case IntercomSpace.HelpCenter:
-        this.callIntercom('showSpace', IntercomSpace.HelpCenter);
+      case IntercomSpaces.HelpCenter:
+        this.callIntercom('showSpace', IntercomSpaces.HelpCenter);
         return;
-      case IntercomSpace.Home:
-        this.callIntercom('showSpace', IntercomSpace.Home);
+      case IntercomSpaces.Home:
+        this.callIntercom('showSpace', IntercomSpaces.Home);
         return;
-      case IntercomSpace.Messages:
-        this.callIntercom('showSpace', IntercomSpace.Messages);
+      case IntercomSpaces.Messages:
+        this.callIntercom('showSpace', IntercomSpaces.Messages);
         return;
-      case IntercomSpace.News:
-        this.callIntercom('showSpace', IntercomSpace.News);
+      case IntercomSpaces.News:
+        this.callIntercom('showSpace', IntercomSpaces.News);
         return;
-      case IntercomSpace.Tasks:
-        this.callIntercom('showSpace', IntercomSpace.Tasks);
+      case IntercomSpaces.Tasks:
+        this.callIntercom('showSpace', IntercomSpaces.Tasks);
         return;
       default:
         throw this.unimplemented(`${space} not implemented on web.`);
@@ -196,7 +197,7 @@ export class IntercomWeb extends WebPlugin implements IntercomPlugin {
   }
 
   async displayHelpCenter(): Promise<void> {
-    this.callIntercom('showSpace', IntercomSpace.HelpCenter);
+    this.callIntercom('showSpace', IntercomSpaces.HelpCenter);
   }
 
   async displayLauncher(): Promise<void> {

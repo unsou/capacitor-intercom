@@ -597,25 +597,26 @@ export interface CompanyOption {
  *
  * @since 4.1.0
  */
-export enum IntercomSpace {
-  Home = 'home',
-  Messages = 'messages',
-  HelpCenter = 'help',
+export const IntercomSpaces = {
+  Home: 'home',
+  Messages: 'messages',
+  HelpCenter: 'help',
 
   /**
    * Only available on web.
    *
    * @since 4.2.0
    */
-  News = 'news',
+  News: 'news',
 
   /**
    * Only available on web.
    *
    * @since 4.2.0
    */
-  Tasks = 'tasks',
+  Tasks: 'tasks',
 }
+export type IntercomSpace = typeof IntercomSpaces[keyof typeof IntercomSpaces]
 
 /**
  * IntercomContent Enum

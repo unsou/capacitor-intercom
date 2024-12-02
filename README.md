@@ -460,9 +460,9 @@ present(options: { space: IntercomSpace; }) => Promise<void>
 
 Presents the Intercom's space.
 
-| Param         | Type                                                                |
-| ------------- | ------------------------------------------------------------------- |
-| **`options`** | <code>{ space: <a href="#intercomspace">IntercomSpace</a>; }</code> |
+| Param         | Type                            |
+| ------------- | ------------------------------- |
+| **`options`** | <code>{ space: string; }</code> |
 
 **Since:** 4.1.0
 
@@ -632,6 +632,11 @@ Construct a type with a set of properties K of type T
 <code>{ [P in K]: T; }</code>
 
 
+#### IntercomSpace
+
+<code>typeof IntercomSpaces[keyof typeof IntercomSpaces]</code>
+
+
 ### Enums
 
 
@@ -662,17 +667,6 @@ Construct a type with a set of properties K of type T
 | **`Checklist`** | <code>'checklist'</code> | Only available for Web             | 4.2.0 |
 | **`News`**      | <code>'news'</code>      | Only available for Web             | 4.2.0 |
 | **`Tour`**      | <code>'tour'</code>      | Only available for Web             | 4.2.0 |
-
-
-#### IntercomSpace
-
-| Members          | Value                   | Description            | Since |
-| ---------------- | ----------------------- | ---------------------- | ----- |
-| **`Home`**       | <code>'home'</code>     |                        |       |
-| **`Messages`**   | <code>'messages'</code> |                        |       |
-| **`HelpCenter`** | <code>'help'</code>     |                        |       |
-| **`News`**       | <code>'news'</code>     | Only available on web. | 4.2.0 |
-| **`Tasks`**      | <code>'tasks'</code>    | Only available on web. | 4.2.0 |
 
 </docgen-api>
 
